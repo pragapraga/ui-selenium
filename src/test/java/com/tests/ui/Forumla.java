@@ -36,7 +36,7 @@ public class Forumla {
 	@Test
 	public void testxpathandcss() {
 		
-		String currentDriverName = "Oscar";
+		String currentDriverName = "Fernando";
 		driver.get("https://www.formula1.com/");
 		driver.findElement(By.cssSelector("button#truste-consent-button")).click();
 		
@@ -53,9 +53,9 @@ public class Forumla {
 		wait.until(ExpectedConditions.visibilityOf(DriverStanding));
 		DriverStanding.click();
 		
-		WebElement driverNameElem = driver.findElement(By.xpath("(//span[contains(text(),'Oscar')])[1]"));
+		WebElement driverNameElem = driver.findElement(By.xpath("(//span[contains(text(),'"+currentDriverName+"')])[1]"));
 		String driverName = driverNameElem.getText();
-		int position = Integer.parseInt(driver.findElement(By.xpath("(//span[contains(text(),'Oscar')])[3]//parent::a//parent::td//parent::tr/td[2]")).getText());
+		int position = Integer.parseInt(driver.findElement(By.xpath("(//span[contains(text(),'"+currentDriverName+"')])[3]//parent::a//parent::td//parent::tr/td[2]")).getText());
 		System.out.println(position);
 		
 		/*WebElement driverNameElement = driver.findElement(By.xpath("//tr/td/a[contains(@data-ajax-url,'oscar')]//ancestor::tr/td[2]"));
@@ -66,7 +66,7 @@ public class Forumla {
 		System.out.println(driverName);
 		//String position = driver.findElement(By.xpath("//tr/td/a[contains(@data-ajax-url,'+\"+"currentDriverName+""\"+')]//ancestor::tr/td[2]")).getText();
 		if(position<10) {
-			System.out.println(currentDriverName+" is within 10 positions");
+			System.out.println(currentDriverName+" is within 10 positions and the position is "+position);
 		}
 		else {
 			System.out.println(currentDriverName+" is out of 10 position by "+(position-10));
