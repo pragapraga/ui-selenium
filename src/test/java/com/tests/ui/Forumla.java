@@ -69,7 +69,7 @@ public class Forumla {
 			System.out.println(currentDriverName+" is within 10 positions");
 		}
 		else {
-			System.out.println(currentDriverName+" is out of 10 position by "+(10-position));
+			System.out.println(currentDriverName+" is out of 10 position by "+(position-10));
 		
 		
 	}
