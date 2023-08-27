@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -27,8 +28,6 @@ public class Forumla {
 
 	@BeforeSuite
 	public void setup() {
-		System.setProperty("webdriver.chrome.driver",
-				"/Users/pragadeeswarangnanasekaran/eclipse-workspace/uiauto/src/test/resources/chromedriver/chromedriver");
 		driver = new ChromeDriver();
 		driver.get("https://www.formula1.com/");
 
@@ -38,7 +37,7 @@ public class Forumla {
 	public void testxpathandcss() throws InterruptedException {
 		String currentDriverName = "Oscar";
 		WebDriverWait waitBtn = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(25));
 		int size = driver.findElements(By.tagName("iframe")).size();
 		/*
 		 * for(int i=0;i<size;i++) { driver.switchTo().frame(i); int
@@ -47,11 +46,11 @@ public class Forumla {
 		 */
 		driver.switchTo().frame(1);
 		WebElement acceptBtn = driver.findElement(By.xpath("//button[contains(@title,'ACCEPT')]"));
-		waitBtn.until(ExpectedConditions.visibilityOf(acceptBtn));
+		//waitBtn.until(ExpectedConditions.visibilityOf(acceptBtn));
 		System.out.println("iFrame size::" + size);
 
 		acceptBtn.click();
-		waitBtn.until(ExpectedConditions.invisibilityOf(acceptBtn));
+		//waitBtn.until(ExpectedConditions.invisibilityOf(acceptBtn));
 		Thread.sleep(5000);
 		driver.switchTo().defaultContent();
 		WebElement Results = driver.findElement(By.xpath("//a/span[contains(text(),'Results')]"));
@@ -61,10 +60,10 @@ public class Forumla {
 
 		// Performing the mouse hover action on the target element.
 		action.moveToElement(Results).perform();
-		Thread.sleep(1000);
+		//Thread.sleep(1000);
 		WebElement driverStandingSubMenu = driver
 				.findElement(By.xpath("//div[@class='nav-header']/a[contains(@href,'driver-standings')]/i"));
-		waitBtn.until(ExpectedConditions.visibilityOf(driverStandingSubMenu));
+		//waitBtn.until(ExpectedConditions.visibilityOf(driverStandingSubMenu));
 		driverStandingSubMenu.click();
 
 		waitBtn.until(ExpectedConditions.urlContains("drivers.html"));
@@ -83,5 +82,10 @@ public class Forumla {
 			System.out.println(currentDriverName + " is out of 10 position by " + (position - 10));
 
 		}
+	}
+	
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
 	}
 }
