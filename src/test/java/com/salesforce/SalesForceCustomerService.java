@@ -1,9 +1,12 @@
 package com.salesforce;
 
+import io.github.sukgu.Shadow;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -26,6 +29,7 @@ public class SalesForceCustomerService {
         Coptions = new ChromeOptions().addArguments("--disable-notifications");
         driver = new ChromeDriver(Coptions);
         driver.get("https://login.salesforce.com");
+        driver.manage().window().maximize();
         //driver.get("https://qeagle-d-dev-ed.develop.my.salesforce.com");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         //WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(15));
@@ -40,12 +44,25 @@ public class SalesForceCustomerService {
     }
 
     @Test
-    public void loginAndTestCreateTask() {
+    public void loginAndTestCustomerService() {
         driver.findElement(By.xpath("//button[@title='Learn More']")).click();
         System.out.println(driver.getTitle());
         Set<String> windows = driver.getWindowHandles();
         List<String> listOfWindows = new ArrayList<>(windows);
         driver.switchTo().window(listOfWindows.get(1));
         driver.findElement(By.xpath("//button[text()='Confirm']")).click();
+        Shadow shadowDOM = new Shadow(driver);
+        shadowDOM.findElementByXPath("//span[text()='Products']").click();
+        WebElement serviceSubMenu = shadowDOM.findElementByXPath("//span[text()='Service']");
+        Actions action = new Actions(driver);
+        action.moveToElement(serviceSubMenu).perform();
+        WebElement serviceMenuLayout = shadowDOM.findElementByXPath("//h2[text()='Service']");
+        Assert.assertTrue(serviceMenuLayout.isDisplayed());
+
+        /*SearchContext shadowRoot = driver.findElement(By.xpath("//hgf-c360nav")).getShadowRoot();
+        WebElement productsLink = shadowRoot.findElement (By.cssSelector ("span.nav-item-label--l1"));
+        driver.executeScript("arguments[0].click()",productsLink);
+        WebElement serviceLink = shadowRoot.findElement (By.cssSelector ("hgf-button.l2-button.l2-hybrid-label > div > span:contains('Service')"));
+        driver.executeScript("arguments[0].click()",serviceLink);*/
     }
 }
