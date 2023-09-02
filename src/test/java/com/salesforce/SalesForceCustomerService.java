@@ -2,21 +2,18 @@ package com.salesforce;
 
 import io.github.sukgu.Shadow;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class SalesForceCustomerService {
@@ -38,7 +35,7 @@ public class SalesForceCustomerService {
         WebElement loginButton = driver.findElement(By.id("Login"));
 
         username.sendKeys("praga@praga.com");
-        password.sendKeys("An$5bawled");
+        password.sendKeys("Hello24Hello");
         loginButton.click();
 
     }
@@ -58,11 +55,9 @@ public class SalesForceCustomerService {
         action.moveToElement(serviceSubMenu).perform();
         WebElement serviceMenuLayout = shadowDOM.findElementByXPath("//h2[text()='Service']");
         Assert.assertTrue(serviceMenuLayout.isDisplayed());
-
-        /*SearchContext shadowRoot = driver.findElement(By.xpath("//hgf-c360nav")).getShadowRoot();
-        WebElement productsLink = shadowRoot.findElement (By.cssSelector ("span.nav-item-label--l1"));
-        driver.executeScript("arguments[0].click()",productsLink);
-        WebElement serviceLink = shadowRoot.findElement (By.cssSelector ("hgf-button.l2-button.l2-hybrid-label > div > span:contains('Service')"));
-        driver.executeScript("arguments[0].click()",serviceLink);*/
+    }
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 }

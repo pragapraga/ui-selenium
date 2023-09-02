@@ -36,7 +36,7 @@ public class SalesforceTask {
         WebElement loginButton = driver.findElement(By.id("Login"));
 
         username.sendKeys("praga@praga.com");
-        password.sendKeys("An$5bawled");
+        password.sendKeys("Hello24Hello");
         loginButton.click();
 
     }
